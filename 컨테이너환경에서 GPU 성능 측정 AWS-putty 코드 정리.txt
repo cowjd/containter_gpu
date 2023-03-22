@@ -1,0 +1,86 @@
+$ sudo apt-get update
+
+$ pip install tensorflow
+
+$ pip install tensorflow-gpu
+
+#Nvidia GPU 드라이버, Nvidia CUDA 툴킷 및 cuDNN 설치
+(https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/efa-start-nccl-base.html#nccl-start-base-drivers)
+
+$ sudo apt-get update
+
+$ sudo apt-get install build-essential -y
+
+$ sudo apt-get install -y gcc make linux-headers-$(uname -r)
+
+$ cat << EOF | sudo tee --append /etc/modprobe.d/blacklist.conf
+blacklist vga16fb
+blacklist nouveau
+blacklist rivafb
+blacklist nvidiafb
+blacklist rivatv
+EOF
+
+$ sudo update-grub
+
+$ sudo reboot
+# reboot되면 putty 재실행
+
+
+$ sudo apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/7fa2af80.pub
+
+$ wget -O /tmp/deeplearning.deb http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
+
+$ sudo dpkg -i /tmp/deeplearning.deb
+
+$ wget -O /tmp/cuda.pin https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
+
+$ sudo mv /tmp/cuda.pin /etc/apt/preferences.d/cuda-repository-pin-600
+
+$ sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
+
+$ sudo add-apt-repository 'deb http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/ /'
+
+$ sudo apt update
+
+# Nvidia GPU 드라이버 및 Nvidia CUDA 툴킷 및 cuDNN 설치
+$ sudo apt install -o Dpkg::Options::='--force-overwrite' cuda-drivers-450 cuda-toolkit-11-0 libcudnn8 libcudnn8-dev -y
+
+$ sudo reboot
+
+# putty 다시 열기
+$ sudo apt install -o Dpkg::Options::='--force-overwrite' nvidia-fabricmanager-450
+
+$ sudo systemctl start nvidia-fabricmanager
+
+$ sudo systemctl enable nvidia-fabricmanager
+
+
+
+$ cd /home
+
+$ export PATH=/usr/local/cuda/bin:/usr/local/cuda/NsightCompute-2019.1:$PATH
+
+$ export LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH
+
+
+$ nvidia-smi -q | head
+
+
+
+
+# 실습 파일 생성
+$ sudo vi tensorflow_gpu.py
+
+
+
+$ python tensorflow_gpu.py
+# GPU:0 나오는지 확인
+
+
+
+$ sudo vi test.py
+# 보내드린 test1.py 파일 텍스트 복사 붙여넣기 하시면 됩니다!
+
+
+$ python test.py

@@ -1,0 +1,17 @@
+# pc에서 docker desktop 실행하고 로그인 
+$ sudo apt-get update
+
+$ pip install docker
+# 도커가 내장되어 있지 않으면 pip > apt-get
+
+$ docker login
+# 본인 도커 아이디(username), 비번(password) 입력 후 login succeeded 출력 확인
+
+$ docker run -itd ubuntu:18.04 /bin/bash
+# 이미지 이름 ; ubuntu:18.04
+
+$ docker ps
+
+$ docker start 아이디
+# 이 아이디는 기억해 주세요! 뒤에 코드에 reboot 후에 사용해요 :>
+ 
